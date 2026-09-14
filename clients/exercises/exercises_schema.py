@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict
 
 
-# Описание структуры задания
 class ExerciseSchema(BaseModel):
     """
     Описание структуры задания.
@@ -18,19 +17,30 @@ class ExerciseSchema(BaseModel):
     estimated_time: str = Field(alias="estimatedTime")
 
 
-# Добавили описание структуры ответа списка заданий конкретного курса
-class GetExercisesResponseSchema(BaseModel):
-    exercises: list[ExerciseSchema]
+class GetExerciseResponseSchema(BaseModel):
+    """
+    Описание структуры ответа на получение задания..
+    """
+    exercise: ExerciseSchema
 
 
 class GetExercisesQuerySchema(BaseModel):
     """
-    Описание структуры запроса на получение списка заданий определенного курса.
+    Описание структуры запроса на получение списка заданий.
     """
+    model_config = ConfigDict(populate_by_name=True)
+
     course_id: str = Field(alias="courseId")
 
 
-class CreateExercisesRequestSchema(BaseModel):
+class GetExercisesResponseSchema(BaseModel):
+    """
+    Описание структуры ответа на получение списка заданий.
+    """
+    exercises: list[ExerciseSchema]
+
+
+class CreateExerciseRequestSchema(BaseModel):
     """
     Описание структуры запроса на создание задания.
     """
@@ -45,15 +55,14 @@ class CreateExercisesRequestSchema(BaseModel):
     estimated_time: str = Field(alias="estimatedTime")
 
 
-
 class CreateExerciseResponseSchema(BaseModel):
     """
-    Описание структуры ответа на создание задания.
+    Описание структуры ответа создания задания.
     """
     exercise: ExerciseSchema
 
 
-class UpdateExercisesRequestSchema(BaseModel):
+class UpdateExerciseRequestSchema(BaseModel):
     """
     Описание структуры запроса на обновление задания.
     """
@@ -66,8 +75,9 @@ class UpdateExercisesRequestSchema(BaseModel):
     description: str | None
     estimated_time: str | None = Field(alias="estimatedTime")
 
+
 class UpdateExerciseResponseSchema(BaseModel):
     """
-    Описание структуры ответа на обновление задания.
+    Описание структуры ответа обновления задания.
     """
     exercise: ExerciseSchema
