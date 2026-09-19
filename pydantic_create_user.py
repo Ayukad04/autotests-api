@@ -1,7 +1,7 @@
 import uuid
 from pydantic import BaseModel, Field, EmailStr, SecretStr, field_serializer
 
-from tools.fakes import get_random_email, generate_random_password
+from tools.fakes import fake, generate_random_password
 
 
 # Базовый класс с общими полями
